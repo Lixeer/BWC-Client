@@ -14,7 +14,7 @@
     "ws": "^8.16.0"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "electron": "^28.1.0",
     "electron-builder": "^25.1.8"
