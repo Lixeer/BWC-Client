@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>灰猫</title>
+    <link rel="stylesheet" href="chat.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <aside>
+        <div class="sidebar" id="sidebar" onclick="event.stopPropagation()">
+            <div class="user-controls">
+                <span class="username-display" id="usernameDisplay"></span>
+                <button class="logout-btn" id="logoutButton" onclick="logout()">退出登录</button>
+            </div>
+            <dialog id="addServerDialog">
+                <div class="add-server-form">
+                    <input type="text" id="serverIp" placeholder="服务器IP" />
+                    <input type="text" id="serverPort" placeholder="端口" />
+                    <input type="text" id="authKey" placeholder="认证密钥" />
+                    <button onclick="addServer()">添加服务器</button>
+                </div>
+            </dialog>
+            <div class="connection-status" id="connectionStatus">
+                未连接
+            </div>
+            <div class="server-list" id="serverList">
+                <!-- Server items will be added here -->
+            </div>
+        </div>
+        <button class="showSidebar" id="showSidebar" onclick="toggleSidebar(event)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 6H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+    </aside>
+    <div class="main-content">
+        <div class="chat-messages" id="chatMessages">
+            <!-- 聊天消息显示 -->
+        </div>
+        <div class="messageBox">
+            <div class="fileUploadWrapper">
+                <label for="file">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 337 337">
+                        <circle stroke-width="20" stroke="#6c6c6c" fill="none" r="158.5" cy="168.5" cx="168.5"></circle>
+                        <path stroke-linecap="round" stroke-width="25" stroke="#6c6c6c" d="M167.759 79V259"></path>
+                        <path stroke-linecap="round" stroke-width="25" stroke="#6c6c6c" d="M79 167.138H259"></path>
+                    </svg>
+                    <span class="tooltip"></span>
+                </label>
+                <input type="file" id="file" name="file" accept="image/*" />
+            </div>
+            <input required placeholder="输入消息..." type="text" id="messageInput" />
+            <button id="sendButton" onclick="sendMessage()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
+                    <path fill="none" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="33.67" stroke="#6c6c6c" d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script src="chat.js"></script>
+</body>
+</html>

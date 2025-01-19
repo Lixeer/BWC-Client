@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>灰喵 - 登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .login-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 1rem;
+        }
+        .app-title {
+            margin: 0.5rem 0 1.5rem;
+            color: #333;
+            font-size: 1.5rem;
+        }
+        input {
+            padding: 8px;
+            margin: 10px 0;
+            width: 250px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #0084ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 250px;
+        }
+        button:hover {
+            background-color: #0073e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="assets/icon.ico" alt="Chat Cat" class="app-icon">
+        <h2 class="app-title">欢迎使用灰喵~</h2>
+        <input type="text" id="username" placeholder="请输入用户名" />
+        <br>
+        <button onclick="login()">进入聊天</button>
+    </div>
+
+    <script>
+        function login() {
+            const username = document.getElementById('username').value.trim();
+            if (username) {
+                localStorage.setItem('username', username);
+                window.location.href = 'chat.html';
+            } else {
+                alert('请输入用户名');
+            }
+        }
+
+        document.getElementById('username').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,676 @@
+body {
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    background: #fff;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+#sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 280px;
+    height: 100vh;
+    background: #f5f5f5;
+    padding: 15px;
+    transform: translateX(-100%);
+    transition: all 0.3s ease;
+    z-index: 99;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    visibility: hidden;
+    opacity: 0;
+}
+
+#sidebar.active {
+    transform: translateX(0);
+    visibility: visible;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-left: 60px;
+    transition: margin-left 0.3s ease;
+    min-height: calc(100vh - 40px);
+}
+
+#sidebar.active~.main-content {
+    margin-left: 310px;
+}
+
+.server-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-top: 15px;
+}
+
+.server-item {
+    padding: 12px;
+    margin: 5px 0;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid #eee;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+}
+
+.server-item:hover {
+    background: #f8f9fa;
+    border-color: #ddd;
+}
+
+.server-item.active {
+    background: #e3f2fd;
+    border-color: #0084ff;
+}
+
+.server-item .server-address {
+    font-weight: 500;
+    color: #333;
+    padding-right: 30px;
+}
+
+.server-item .server-key {
+    font-size: 12px;
+    color: #666;
+    word-break: break-all;
+    padding-right: 30px;
+}
+
+.delete-server {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5em;
+    border: 0px solid transparent;
+    background-color: rgba(100, 77, 237, 0.08);
+    border-radius: 0.75em;
+    transition: all 0.2s linear;
+}
+
+.delete-server:hover {
+    box-shadow: 3.4px 2.5px 4.9px rgba(0, 0, 0, 0.025),
+        8.6px 6.3px 12.4px rgba(0, 0, 0, 0.035),
+        17.5px 12.8px 25.3px rgba(0, 0, 0, 0.045),
+        36.1px 26.3px 52.2px rgba(0, 0, 0, 0.055),
+        99px 72px 143px rgba(0, 0, 0, 0.08);
+}
+
+.server-item:hover .delete-server {
+    display: flex;
+}
+
+.delete-server svg {
+    width: 20px;
+    height: 20px;
+    transition: all 0.2s ease;
+}
+
+.delete-server:hover svg path {
+    fill: #ff4d4f;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.messageBox {
+    width: 70%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 0 10px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    margin: 15px auto;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.messageBox:focus-within {
+    border-color: #0084ff;
+    box-shadow: 0 2px 8px rgba(0, 132, 255, 0.1);
+}
+
+.fileUploadWrapper {
+    display: flex;
+    align-items: center;
+    padding-right: 8px;
+}
+
+.fileUploadWrapper label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}
+
+.fileUploadWrapper label svg {
+    height: 20px;
+    width: 20px;
+}
+
+#file {
+    display: none;
+}
+
+.fileUploadWrapper label svg path,
+.fileUploadWrapper label svg circle {
+    stroke: #666;
+    transition: all 0.3s;
+}
+
+.fileUploadWrapper label:hover svg path,
+.fileUploadWrapper label:hover svg circle {
+    stroke: #0084ff;
+}
+
+.fileUploadWrapper label:hover svg circle {
+    fill: rgba(0, 132, 255, 0.1);
+}
+
+#messageInput {
+    flex: 1;
+    height: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    padding: 0 8px;
+    color: #333;
+    font-size: 14px;
+}
+
+#messageInput::placeholder {
+    color: #999;
+}
+
+#sendButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 4px;
+    margin-left: 4px;
+}
+
+#sendButton svg {
+    height: 20px;
+    width: 20px;
+}
+
+#sendButton svg path {
+    stroke: #666;
+    transition: all 0.3s;
+}
+
+#messageInput:focus~#sendButton svg path,
+#messageInput:valid~#sendButton svg path {
+    fill: rgba(0, 132, 255, 0.1);
+    stroke: #0084ff;
+}
+
+#sendButton:hover svg path {
+    fill: rgba(0, 132, 255, 0.1);
+    stroke: #0084ff;
+}
+
+.message {
+    margin: 8px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.message.notice {
+    text-align: center;
+    margin: 8px auto;
+    max-width: 80%;
+}
+
+.notice-content {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    font-size: 12px;
+    color: #666;
+}
+
+.message-bubble {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 16px;
+    position: relative;
+    word-wrap: break-word;
+}
+
+.message.sent {
+    align-items: flex-end;
+}
+
+.message.received {
+    align-items: flex-start;
+}
+
+.message.sent .message-bubble {
+    background: #0084ff;
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.message.received .message-bubble {
+    background: white;
+    color: #333;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.message-info {
+    font-size: 12px;
+    color: #666;
+    margin: 2px 8px;
+}
+
+.message.sent .message-info {
+    text-align: right;
+}
+
+.input-area {
+    padding: 15px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    gap: 10px;
+}
+
+input,
+button {
+    padding: 8px;
+    border-radius: 4px;
+}
+
+input {
+    flex-grow: 1;
+    border: 1px solid #ddd;
+}
+
+button {
+    background: #0084ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0073e6;
+}
+
+.add-server-form {
+    margin-bottom: 15px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.add-server-form input {
+    width: calc(100% - 16px);
+    margin-bottom: 8px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.add-server-form input:focus {
+    outline: none;
+    border-color: #0084ff;
+    box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.1);
+}
+
+.add-server-form button {
+    width: 100%;
+    padding: 8px;
+    background: #0084ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.add-server-form button:hover {
+    background: #0073e6;
+}
+
+.connection-status {
+    padding: 5px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.connected {
+    color: green;
+}
+
+.disconnected {
+    color: red;
+}
+
+.user-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.username-display {
+    font-weight: 500;
+    color: #333;
+}
+
+.logout-btn {
+    padding: 6px 12px;
+    background: #ff4d4f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.logout-btn:hover {
+    background: #ff7875;
+}
+
+.add-server-item {
+    margin-top: 10px;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.add-server-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: transparent;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-server-btn:hover {
+    border-color: #0084ff;
+    color: #0084ff;
+    background-color: rgba(0, 132, 255, 0.1);
+}
+
+#addServerDialog {
+    border: none;
+    border-radius: 12px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#addServerDialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.add-server-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 300px;
+}
+
+.add-server-form input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.add-server-form input:focus {
+    border-color: #0084ff;
+}
+
+.add-server-form button {
+    padding: 10px;
+    background-color: #0084ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-server-form button:hover {
+    background-color: #0066cc;
+}
+
+aside {
+    position: relative;
+}
+
+.showSidebar {
+    position: fixed;
+    left: 15px;
+    top: 15px;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    color: #0084ff;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.showSidebar svg {
+    transition: all 0.3s ease;
+}
+
+.showSidebar:hover {
+    background-color: #f5f5f5;
+    border-color: #0084ff;
+}
+
+#sidebar.active+.showSidebar {
+    transform: translateX(300px);
+}
+
+#sidebar.active+.showSidebar svg {
+    transform: rotate(90deg);
+}
+
+/* 移动设备响应式布局 */
+@media screen and (max-width: 768px) {
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .main-content {
+        margin-left: 0;
+        border-radius: 0;
+        border: none;
+        height: 100vh;
+    }
+
+    #sidebar.active~.main-content {
+        margin-left: 0;
+        transform: translateX(280px);
+    }
+
+    .chat-messages {
+        height: calc(100vh - 120px);
+    }
+
+    .message {
+        max-width: 85%;
+        margin: 8px;
+    }
+
+    .message-bubble {
+        max-width: 100%;
+        padding: 8px 12px;
+    }
+
+    .message-bubble img {
+        max-width: 240px !important;
+        max-height: 240px !important;
+    }
+
+    .input-area {
+        padding: 10px;
+        height: auto;
+        min-height: 60px;
+    }
+
+    .messageBox {
+        width: 300px;
+    }
+
+    #messageInput {
+        font-size: 16px;
+        padding: 8px;
+        margin-right: 8px;
+    }
+
+    .send-button {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+    }
+
+    .file-upload {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+    }
+
+    .showSidebar {
+        width: 36px;
+        height: 36px;
+        padding: 6px;
+        left: 10px;
+        top: 10px;
+    }
+
+    #sidebar {
+        width: 280px;
+        padding: 10px;
+    }
+
+    .server-item {
+        padding: 10px;
+        margin-bottom: 8px;
+    }
+
+    .server-address {
+        font-size: 14px;
+    }
+
+    .server-key {
+        font-size: 12px;
+    }
+
+    .delete-server {
+        width: 32px;
+        height: 32px;
+        padding: 4px;
+    }
+
+    .add-server-item {
+        padding: 10px;
+    }
+
+    .add-server-btn {
+        width: 100%;
+        height: 32px;
+        padding: 4px;
+    }
+
+    dialog {
+        width: 90%;
+        max-width: 320px;
+        padding: 15px;
+    }
+
+    dialog input {
+        font-size: 16px;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+
+    dialog button {
+        font-size: 16px;
+        padding: 8px 16px;
+    }
+}
+
+/* 针对较小屏幕的额外调整 */
+@media screen and (max-width: 320px) {
+    .message-bubble img {
+        max-width: 200px !important;
+        max-height: 200px !important;
+    }
+
+    .message {
+        max-width: 90%;
+        margin: 6px;
+    }
+
+    #sidebar {
+        width: 260px;
+    }
+
+    .messageBox {
+        width: 300px;
+    }
+}
