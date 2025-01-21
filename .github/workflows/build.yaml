@@ -20,7 +20,10 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '20'   # 你可以设置需要的 Node.js 版本，支持如 14.x、16.x、18.x 等
-
+    
+    - name: clear
+      run: electron-builder --clear-cache
+    
     - name: Install dependencies
       run: npm install    # 安装项目依赖
 
