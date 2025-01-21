@@ -1,5 +1,5 @@
 <div align="center">
-<h1 style="font-size:10vw"><h1 style="font-size:10vw">灰喵客服端</h1><br></h1>
+<h1 style="font-size:10vw"><h1 style="font-size:10vw">灰喵聊天客户端</h1><br></h1>
 <p align='center'>
 <img src='https://i.postimg.cc/QNPmws3g/00131-716747303-2.png' width='200' alt='logo' aling='middle'/>
 </p>
@@ -11,4 +11,4 @@
 </div>
 </p>
 
-> [灰喵](https://github.com/Lixeer/Black-White-Cat)的客服端，基于Electron打造
+> [灰喵](https://github.com/Lixeer/Black-White-Cat)的聊天客户端，基于Electron打造
