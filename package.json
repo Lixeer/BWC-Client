@@ -29,13 +29,15 @@
       "target": [
         "nsis",
         "portable"
-      ]
-      
+      ],
+      "icon": "assets/icon.ico"
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "shortcutName": "BWC Chat"
+      "shortcutName": "BWC Chat",
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico"
     }
   }
 }
